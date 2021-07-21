@@ -45,12 +45,19 @@ public class Servidor {
 
                         String respuesta = dataInputStream.readUTF();
 
-                        copiarArchivo(file,respuesta);
+                        File archivoADuplicar= new File(file, respuesta);                      //Instanciamos el archivo a duplicar.
 
-                        System.out.println("Se Duplico:" +respuesta);
-                        dataOutputStream.writeUTF("Se Duplico:" +respuesta +" con exito");
+                        if(!archivoADuplicar.exists()){
+                            dataOutputStream.writeUTF("no existe el archivo");
+                            break;
+                        }else{
 
-                        break;
+                        copiarArchivo(file,archivoADuplicar,respuesta);
+
+                        System.out.println("Se Duplico:" + respuesta);
+                        dataOutputStream.writeUTF("Se Duplico:" + respuesta + " con exito");
+                        break;}
+
                     case "3":
                         file = new File("src/main/java/archivosServidor");
 
@@ -83,21 +90,21 @@ public class Servidor {
         return archivos;
     }
 
-    public static void copiarArchivo(File filePadre, String respuesta )throws IOException {
+    public static void copiarArchivo(File filePadre,File archivoADuplicar,String respuesta )throws IOException {
 
-        File archivo= new File(filePadre, respuesta);                      //instancia del archivo que se desea copiar
-        File archivoCopia = new File(filePadre,respuesta+"-copy");    //instancia del nuevo archivo.
+            File archivoCopia = new File(filePadre, respuesta + "-copy");    //instancia del nuevo archivo.
 
-        InputStream inputStream = new FileInputStream(archivo);            //abrimos una conexion con el archivo a copiar
-        OutputStream  outputStream = new FileOutputStream(archivoCopia);   //creamos una secuencia de salida de archivo para escribir en el archivoCopia
+            InputStream inputStream = new FileInputStream(archivoADuplicar);            //abrimos una conexion con el archivo a copiar
+            OutputStream outputStream = new FileOutputStream(archivoCopia);   //creamos una secuencia de salida de archivo para escribir en el archivoCopia
 
-        byte[] buffer = new byte[1024];   //arreglo de byte que nos va ayudar a guardar el contenido de archivo
+            byte[] buffer = new byte[1024];   //arreglo de byte que nos va ayudar a guardar el contenido de archivo
 
-        int length;
-        while ((length = inputStream.read(buffer)) > 0) {   //con la ayuda de un ciclo while, al mismo tiempo que leemos,
-            outputStream.write(buffer, 0, length);      // escribimos el contenido usando el método write de FileOutputStream
-        }
-        inputStream.close();
-        outputStream.close();
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {   //con la ayuda de un ciclo while, al mismo tiempo que leemos,
+                outputStream.write(buffer, 0, length);      // escribimos el contenido usando el método write de FileOutputStream
+            }
+            inputStream.close();
+            outputStream.close();
+
     }
 }
