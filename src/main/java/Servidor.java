@@ -12,15 +12,15 @@ public class Servidor {
         int puerto = scanner.nextInt();                        //obtenemos el puerto a escuchar.
 
 
-        try {                                                              //try-catch para manejar la conexion con el cliente
+        try {                                                              //try y catch para controlar la ejecución del subprograma
             ServerSocket serverSocket = new ServerSocket(puerto);          // declaramos un objeto ServerSocket para realizar la comunicación
 
             Socket cliente = serverSocket.accept(); //El servidor espera que se conecte un cliente
 
             System.out.println("Se conecto un Cliente");
 
-            DataInputStream dataInputStream = new DataInputStream(cliente.getInputStream());     // declaramos un objeto DataInputStream para leer los datos del cliente
-            DataOutputStream dataOutputStream = new DataOutputStream(cliente.getOutputStream());  // declaramos un objeto DataoutputStream para enviar datos al cliente
+            DataInputStream dataInputStream = new DataInputStream(cliente.getInputStream());     //  objeto DataInputStream para ayudarnos a leer los datos del cliente
+            DataOutputStream dataOutputStream = new DataOutputStream(cliente.getOutputStream());  // objeto DataoutputStream para ayudarnos a enviar datos al cliente
 
             String mensajeCliente = "";  //String para almacenar lo enviado por el cliente.
 
@@ -86,7 +86,7 @@ public class Servidor {
     public static void copiarArchivo(File filePadre, String respuesta )throws IOException {
 
         File archivo= new File(filePadre, respuesta);                      //instancia del archivo que se desea copiar
-        File archivoCopia = new File(filePadre,"copia"+respuesta);    //instancia del nuevo archivo.
+        File archivoCopia = new File(filePadre,respuesta+"-copy");    //instancia del nuevo archivo.
 
         InputStream inputStream = new FileInputStream(archivo);            //abrimos una conexion con el archivo a copiar
         OutputStream  outputStream = new FileOutputStream(archivoCopia);   //creamos una secuencia de salida de archivo para escribir en el archivoCopia

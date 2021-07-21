@@ -14,18 +14,21 @@ public class Cliente {
         int puertoDestino = scanner.nextInt();
         System.out.println("Conectando....");
 
-        try{
-            Socket socketCliente = new Socket(ipDestino,puertoDestino);
+        try{  //try y catch para controlar la ejecución del subprograma
+
+            Socket socketCliente = new Socket(ipDestino,puertoDestino);      // objeto socket para realizar la comunicación  con la ip de destino y el
+                                                                             // puerto que vamos a utilizar para la comunicación.
 
             System.out.println("Conexion establecida");
-            DataOutputStream dataOutputStream = new DataOutputStream(socketCliente.getOutputStream());
-            DataInputStream dataInputStream = new DataInputStream(socketCliente.getInputStream());
+
+            DataOutputStream dataOutputStream = new DataOutputStream(socketCliente.getOutputStream()); // objeto DataOutputStream para ayudarnos a enviar datos al servidor.
+            DataInputStream dataInputStream = new DataInputStream(socketCliente.getInputStream());    // objeto DataOutputStream para ayudarnos a enviar datos al servidor.
             String mensaje = "";
 
             while(!mensaje.equals("exit")){
                 mensaje = scanner.nextLine();
-                dataOutputStream.writeUTF(mensaje);
-                System.out.println(dataInputStream.readUTF());
+                dataOutputStream.writeUTF(mensaje);                              //enviamos el mensaje al servidor
+                System.out.println(dataInputStream.readUTF());                   //imprimimos por pantalla la respuesta del servidor.
             }
 
         }catch (ConnectException e){
