@@ -65,11 +65,15 @@ public class Servidor {
                         respuesta = dataInputStream.readUTF();
 
                         File archivo = new File(file, respuesta);
+                        if(!archivo.exists()){
+                            dataOutputStream.writeUTF("no existe el archivo");
+                            break;
+                        }else {
                         archivo.delete();                                            //Eliminamos el archivo  indicado por este nombre de ruta abstracto.
 
                         System.out.println("Se Borro:"+respuesta);
                         dataOutputStream.writeUTF("Se Borro: "+respuesta + " con exito");
-                        break;
+                        break;}
                     default: dataOutputStream.writeUTF("Que deseas realizar? \n 1.Ver Listado de Archivos \n 2. Duplicar Archivo \n 3. Eliminar Archivos");
                     break;
                 }
